@@ -3,3 +3,7 @@ node_modules
 
 #ignore config file
 config.js
+
+# production
+/build
+/public
