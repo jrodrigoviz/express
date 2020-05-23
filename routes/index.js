@@ -25,7 +25,63 @@ router.get('/api/story', async function(req, res, next) {
   res.json(data);
 });
 
+router.get('/api/data', async function(req, res, next) {
+  var country = req.query.country;
+  var continent = [];
+  //// TODO: params, query
+  var data = await dbRequest(country,continent,1);
+  res.json(data)
+});
 
+router.get('/api/map', async function(req, res, next) {
+
+  var country = (typeof req.query.country === 'undefined') ?[]: req.query.country.split(",");
+  var continent = (typeof req.query.continent === 'undefined') ?['Africa', 'South America','Asia','North America']: req.query.continent.split(",");
+  //// TODO: params, query
+  var data = await dbRequest(country,continent,2);
+  res.json(data)
+});
+
+async function dbRequest(country,continent,query){
+
+  const db = await mongoClient.connect(db_url);
+  switch(query){
+    case 1:
+      var collection = db.db("data").collection('coffee')
+      var result = await collection
+        .aggregate([
+          {$match:{ 'Country' :{$not:{$in:["Cote d?Ivoire",""]}} }},
+          //{$group:{_id:"$Country",value:{$avg:"$CupperPoints"}}},
+          {$sort:{value:-1}},
+          {$limit:2000},
+         // {$filter:},
+          {$project:{
+            _id:0,
+            Country:"$Country",
+            Region:"$Region",
+            TotalCupPoints:{$round:["$TotalCupPoints",1]},
+            ProcessingMethod:"$ProcessingMethod",
+            Flavor:"$Flavor",
+            Body:"$Body",
+            Acidity:"$Acidity",
+            Sweetness:"$Sweetness"
+          }}
+
+        ])
+        .toArray();
+        break;
+  case 2:
+    var collection = db.db("data").collection('map')
+    var result = await collection
+      .aggregate([
+        {$match:{"properties.CONTINENT":{$in:continent}}}
+      ])
+      .toArray();
+      break;
+  };
+
+  return result;
+};
 
 
 async function dataRequest(){
