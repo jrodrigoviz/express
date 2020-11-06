@@ -7,7 +7,7 @@ var history = require('connect-history-api-fallback');
 var cors = require('cors');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var chooserRouter = require('./routes/chooser');
 var imagesRouter = require('./routes/images');
 
 var app = express();
@@ -43,7 +43,7 @@ app.use(history({
 
 //app.use('/', indexRouter);
 app.use('/',indexRouter)
-app.use('/users', usersRouter);
+app.use('/',chooserRouter);
 app.use('/images', imagesRouter);
 
 

@@ -88,7 +88,6 @@ async function dataRequest(){
   const db = await mongoClient.connect(db_url);
   const collection = db.db("data").collection('posts')
   const result = await collection.find({}).toArray();
-
   return result;
 };
 

@@ -1,0 +1,10 @@
+//mongoDB
+var loginData ={
+  host: '127.0.0.1:27017',
+  user: '',
+  password: '',
+  database: 'admin'
+};
+
+
+module.exports = loginData;
