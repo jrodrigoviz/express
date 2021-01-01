@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     //create a room element in array
     var roomIndex = arr.findIndex(x=>x.room == d.room);
     if (roomIndex == -1){
-      arr.push({room:d.room,data:[]});
+      arr.push({room:d.room,data:[],buckets:[]});
     }Math.random()*500;
     
     //let socket join the room
@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
       const color = '#'+Math.floor(Math.random()*16777215).toString(16);
       const x = Math.floor(Math.random() * (480 - 20 + 1)) + 20 ;
       const y = 0;
-      const r = 5;
+      const r = 10;
       const element = {socket:socket.id,data:d.dataField,color:color,x:x,y:y,r:r,dataField:d.dataField}
       roomData.data.push(element);
     }
@@ -94,6 +94,26 @@ io.on('connection', (socket) => {
 
   })
 
+  socket.on('add-bucket', (d,c) =>{
+
+    console.log("user adding bucket")
+    
+    const room = Object.keys(socket.rooms)[1]
+    // add the data to the corresponding data array on the server
+    const roomData = arr.filter(d => (d.room == room))[0]
+
+    roomData.buckets.push({
+      key:roomData.buckets.length+1,
+      series:roomData.buckets.length+1,
+      value:0
+    })
+    
+    // give back thje results of the data array to the clients
+    io.sockets.in(Object.keys(socket.rooms)[1]).emit('server-bucket-confirm', roomData.buckets);
+    console.log(roomData.buckets)
+    c(roomData.buckets)
+
+  })
 
 
 
