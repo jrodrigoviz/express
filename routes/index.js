@@ -3,10 +3,11 @@ var router = express.Router();
 var mongoClient = require('mongodb').MongoClient;
 var db = require('mongodb').db;
 var config = require('../config');
+var schedule = require('../jobs/nytFetch');
 
-const db_url ='mongodb://'+config.user+":"+config.password+"@"+config.host+"/"+config.database;
+const db_url ='mongodb://'+config.mongoRead.user+":"+config.mongoRead.password+"@"+config.mongoRead.host+"/"+config.mongoRead.database;
 
-// interval to fetch last minuteLag of data;
+// interval to fetch last minuteLag of data;exitnpm 
 
 
 /* GET home page. */

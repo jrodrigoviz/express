@@ -3,6 +3,7 @@ node_modules
 
 #ignore config file
 config.js
+.vscode
 
 # production
 /build
