@@ -9,6 +9,7 @@ var cors = require('cors');
 var indexRouter = require('./routes/index');
 var chooserRouter = require('./routes/chooser');
 var imagesRouter = require('./routes/images');
+var nytRouter = require('./routes/nyt');
 
 var app = express();
 
@@ -41,11 +42,10 @@ app.use(history({
     ]
  }))
 
-//app.use('/', indexRouter);
 app.use('/',indexRouter)
 app.use('/',chooserRouter);
+app.use('/', nytRouter);
 app.use('/images', imagesRouter);
-
 
 
 // catch 404 and forward to error handler

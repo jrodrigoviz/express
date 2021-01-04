@@ -7,7 +7,9 @@ var schedule = require('../jobs/nytFetch');
 
 const db_url ='mongodb://'+config.mongoRead.user+":"+config.mongoRead.password+"@"+config.mongoRead.host+"/"+config.mongoRead.database;
 
-// interval to fetch last minuteLag of data;exitnpm 
+/* start the option of running the api fetch job */
+
+//schedule();
 
 
 /* GET home page. */

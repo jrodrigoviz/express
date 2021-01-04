@@ -40,7 +40,14 @@ async function insertDataToDB(data){
     
 }
 
-cron.schedule('* * * * * ', ()=> {
-    console.log("Starting schedule to fetch data every minute");
-    getDataFromAPI("all", "all",60)
-    });
+function startCron(){
+    console.log("Starting Cron")
+    cron.schedule('* * * * * ', ()=> {
+        console.log("Starting schedule to fetch data every minute");
+        getDataFromAPI("all", "all",60)
+        });
+}
+
+module.exports = startCron;
+
+
