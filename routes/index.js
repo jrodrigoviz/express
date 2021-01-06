@@ -9,7 +9,7 @@ const db_url ='mongodb://'+config.mongoRead.user+":"+config.mongoRead.password+"
 
 /* start the option of running the api fetch job */
 
-//schedule();
+if(process.env.NODE_ENV=='production'){ schedule();};
 
 
 /* GET home page. */

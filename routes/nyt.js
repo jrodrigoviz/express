@@ -10,11 +10,12 @@ const db_url ='mongodb://'+config.mongoRead.user+":"+config.mongoRead.password+"
 
 
 router.get('/api/nyt/ts', async (req,res,next)=>{
-    var dbResult = await nytDBRequest();
+    var date = req.query.date
+    var dbResult = await nytDBRequest(date);
     res.json(dbResult[0]); // db returns as a single valued array, convert to json object for easier use
 })
 
-async function nytDBRequest(){
+async function nytDBRequest(date){
     const db = await mongoClient.connect(db_url);
 
     var collection = db.db("nyt").collection('articles');
@@ -28,7 +29,7 @@ async function nytDBRequest(){
           
           }, {$match: 
           {
-            pubDate:{$gt:new Date(new Date("2021-01-01").setHours(0,0,0,0))},
+            pubDate:{$gt:new Date(new Date(date).setHours(0,0,0,0))},
           }}, {$facet: {
             desCount: [ 
               { $unwind: "$des_facet" },
@@ -52,7 +53,7 @@ async function nytDBRequest(){
             all:[
                 { $match:{thumbnail_standard:{$ne:null}}},
                 { $project:{"thumbnail":"$thumbnail_standard","pubDate":"$pubDate","title":"$title","url":"$url","des_facet":"$des_facet","org_facet":"$org_facet","per_facet":"$per_facet"}},
-                { $sort:{pubDate:1}},
+                { $sort:{pubDate:-1}},
                 { $limit:25}
                 ]
           }}]
