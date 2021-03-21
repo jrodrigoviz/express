@@ -85,7 +85,7 @@ async function nytDBRequest(date) {
           { $unwind: "$des_facet" },
           { $group: {_id: {d:"$des_facet",p:"$pubDay"},count: { $sum: 1 }}},
           { $project:{"_id":0,cat:"$_id.d",date:"$_id.p",v:"$count"}},
-          { $addFields:{ dayDelta: {$divide:[{$subtract:[new Date(parsedDate),'$date']},1000 * 60 * 60 * 24]}}},
+          { $addFields:{ dayDelta: {$divide:[{$subtract:['$date',new Date()]},1000 * 60 * 60 * 24]}}},
           { $addFields:{ facetWeight:{$pow:[1.5,'$dayDelta']}}},
           { $addFields:{ relevancyScore:{$multiply:['$facetWeight','$v']}}},
           { $group:{_id:'$cat',score:{$sum:'$relevancyScore'}}},
@@ -103,7 +103,7 @@ async function nytDBRequest(date) {
           { $unwind: "$org_facet" },
           { $group: {_id: {d:"$org_facet",p:"$pubDay"},count: { $sum: 1 }}},
           { $project:{"_id":0,cat:"$_id.d",date:"$_id.p",v:"$count"}},
-          { $addFields:{ dayDelta: {$divide:[{$subtract:[new Date(parsedDate),'$date']},1000 * 60 * 60 * 24]}}},
+          { $addFields:{ dayDelta: {$divide:[{$subtract:['$date', new Date()]},1000 * 60 * 60 * 24]}}},
           { $addFields:{ facetWeight:{$pow:[1.5,'$dayDelta']}}},
           { $addFields:{ relevancyScore:{$multiply:['$facetWeight','$v']}}},
           { $group:{_id:'$cat',score:{$sum:'$relevancyScore'}}},
@@ -121,7 +121,7 @@ async function nytDBRequest(date) {
           { $unwind: "$per_facet" },
           { $group: {_id: {d:"$per_facet",p:"$pubDay"},count: { $sum: 1 }}},
           { $project:{"_id":0,cat:"$_id.d",date:"$_id.p",v:"$count"}},
-          { $addFields:{ dayDelta: {$divide:[{$subtract:[new Date(parsedDate),'$date']},1000 * 60 * 60 * 24]}}},
+          { $addFields:{ dayDelta: {$divide:[{$subtract:['$date', new Date()]},1000 * 60 * 60 * 24]}}},
           { $addFields:{ facetWeight:{$pow:[1.5,'$dayDelta']}}},
           { $addFields:{ relevancyScore:{$multiply:['$facetWeight','$v']}}},
           { $group:{_id:'$cat',score:{$sum:'$relevancyScore'}}},
@@ -151,6 +151,7 @@ async function nytDBRequest(date) {
             { $unwind:"$A"},
             { $group: { _id:"$A.cat",score:{$min:"$A.score"}, count:{$sum:"$A.count"}}},
             { $project: { _id:0,key:{$substr:["$_id",0,200]},value2:  {$round:["$score",1]},value:"$count"}},
+            { $match:{value:{$gt:0}}}, 
             { $sort: { value:-1 } }
           ],
           orgFinal:[
@@ -158,6 +159,7 @@ async function nytDBRequest(date) {
             { $unwind:"$A"},
             { $group: { _id:"$A.cat",score:{$min:"$A.score"}, count:{$sum:"$A.count"}}},
             { $project: { _id:0,key:{$substr:["$_id",0,200]},value2:  {$round:["$score",1]},value:"$count"}},
+            { $match:{value:{$gt:0}}},
             { $sort: { value:-1 } }
           ],
           perFinal:[
@@ -165,6 +167,7 @@ async function nytDBRequest(date) {
             { $unwind:"$A"},
             { $group: { _id:"$A.cat",score:{$min:"$A.score"}, count:{$sum:"$A.count"}}},
             { $project: { _id:0,key:{$substr:["$_id",0,200]},value2: {$round:["$score",1]},value:"$count"}},
+            { $match:{value:{$gt:0}}},
             { $sort: { value:-1 } }
           ],
           raw:[
