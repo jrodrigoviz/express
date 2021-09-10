@@ -17,6 +17,9 @@ jobs:
           command: |
             docker build -t express_prod .
       - run:
+          name: Install rsync in the environment
+          command:  apt-get install rsync
+      - run:
           name: Add matchstick to known hosts
           command: ssh-keyscan -H 45.32.225.95 >> ~/.ssh/known_hosts     
       - run:
