@@ -14,10 +14,9 @@ jobs:
         shell: /bin/sh
         pwd: /
 
-      - run: sudo apt update
       - run:
           name: Install rsync in the environment
-          command:  apt update && apt-get install rsync
+          command: sudo apt update && sudo apt-get install rsync
 
       - checkout
       - setup_remote_docker
@@ -32,5 +31,5 @@ jobs:
       - run:
            name: Deploy Over SSH
            command: |
-             rsync -cave ssh $SSH_USER@$SSH_HOST:/app/src 
+            sudo rsync -cave ssh $SSH_USER@$SSH_HOST:/app/src 
 
