@@ -13,7 +13,8 @@ jobs:
       - type: shell
         shell: /bin/sh
         pwd: /
-
+        command: sudo apt update
+        
       - run:
           name: Install rsync in the environment
           command: sudo apt update && sudo apt-get install rsync
