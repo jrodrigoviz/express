@@ -16,3 +16,8 @@ jobs:
           name: Build application Docker image
           command: |
             docker build -t express_prod .
+      - run:
+           name: Deploy Over SSH
+           command: |
+             ssh $SSH_USER@$SSH_HOST "echo "hello" "
+
