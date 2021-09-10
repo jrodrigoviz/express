@@ -13,11 +13,11 @@ jobs:
       - type: shell
         shell: /bin/sh
         pwd: /
-        command: apt update
+        command: apt-get update
         
       - run:
           name: Install rsync in the environment
-          command: apt update && apt-get install rsync
+          command: apt-get update && apt-get install rsync
 
       - checkout
       - setup_remote_docker
