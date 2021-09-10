@@ -7,9 +7,6 @@ jobs:
       - image: docker:17.05.0-ce-git
     resource_class: small
     steps:
-      - run: 
-          name: Install pv to monitor transfer
-          command: apk update && apk add pv
           
       - add_ssh_keys:
           fingerprints:
@@ -23,9 +20,21 @@ jobs:
 
       - run:
           name: Add matchstick to known hosts
-          command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts     
+          command: ssh-keyscan -H $SSH_HOST >> ~/.ssh/known_hosts  
+
       - run:
-           name: Deploy Over SSH, Using Docker save and load on remote machine
+          name: Save the docker image as a tar file
+          command: |
+            docker save express_prod | gzip > /express_prod.tar.gz 
+      - run:
+           name: Deploy Over SCP
            command: |
-             docker save express_prod | pv | ssh -C $SSH_USER@$SSH_HOST docker load
+             scp /express_prod.tar.gz $SSH_USER@$SSH_HOST:/app/src 
+
+      - run:
+           name: Load into Docker in remote
+           command: |
+             ssh $SSH_USER@$SSH_HOST && doocker load < /app/src/express_prod.tar.gz
+
+
 
