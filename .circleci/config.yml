@@ -9,7 +9,8 @@ jobs:
     steps:
       - run: 
           name: Install pv to monitor transfer
-          command: apk add pv
+          command: apk update && apk add pv
+          
       - add_ssh_keys:
           fingerprints:
             - "de:47:55:2a:77:39:a0:71:e7:a7:d3:4c:84:45:c8:51"
