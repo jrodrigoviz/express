@@ -27,5 +27,5 @@ jobs:
       - run:
            name: Deploy Over SSH, Using Docker save and load on remote machine
            command: |
-             docker save express_prod | bzip2 | pv | ssh $SSH_USER@$SSH_HOST docker load
+             docker save express_prod | pv | ssh -C $SSH_USER@$SSH_HOST docker load
 
