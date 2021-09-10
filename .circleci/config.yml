@@ -7,14 +7,9 @@ jobs:
       - image: docker:17.05.0-ce-git
     resource_class: small
     steps:
-      - type: shell
-        shell: /bin/sh
-        pwd: /
-        command: apt-get update
-        
       - run:
-          name: Install rsync in the environment
-          command: apt-get update && apt-get install rsync
+          name: Install rsync in the environment, Docker image uses Alpine
+          command: apk update && apk add rsync
 
       - checkout
       - setup_remote_docker
