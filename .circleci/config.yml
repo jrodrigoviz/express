@@ -7,6 +7,10 @@ jobs:
       - image: docker:17.05.0-ce-git
     resource_class: small
     steps:
+      
+      - add_ssh_keys:
+          fingerprints:
+            - "de:47:55:2a:77:39:a0:71:e7:a7:d3:4c:84:45:c8:51"
       - checkout
       - setup_remote_docker
       - run:
