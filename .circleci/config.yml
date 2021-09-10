@@ -35,7 +35,7 @@ jobs:
       - run:
            name: Load into Docker in remote
            command: |
-             ssh $SSH_USER@$SSH_HOST  'doocker load < /app/src/express_prod.tar.gz'
+             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz'
 
 
 
