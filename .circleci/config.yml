@@ -1,5 +1,5 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
-version: 2.1
+version: 2.0
 
 orbs:
   node: circleci/node@4.1
@@ -10,15 +10,22 @@ jobs:
       - image: docker:17.05.0-ce-git
     resource_class: small
     steps:
+      - type: shell
+        shell: /bin/sh
+        pwd: /
+
+      - run: sudo apt update
+      - run:
+          name: Install rsync in the environment
+          command:  apt update && apt-get install rsync
+
       - checkout
       - setup_remote_docker
       - run:
           name: Build application Docker image
           command: |
             docker build -t express_prod .
-      - run:
-          name: Install rsync in the environment
-          command:  apt update && apt-get install rsync
+
       - run:
           name: Add matchstick to known hosts
           command: ssh-keyscan -H 45.32.225.95 >> ~/.ssh/known_hosts     
