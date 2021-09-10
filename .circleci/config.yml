@@ -18,7 +18,7 @@ jobs:
             docker build -t express_prod .
       - run:
           name: Add matchstick to known hosts
-          command: sudo ssh-keyscan -H 45.32.225.95 >> ~/.ssh/known_hosts     
+          command: ssh-keyscan -H 45.32.225.95 >> ~/.ssh/known_hosts     
       - run:
            name: Deploy Over SSH
            command: |
