@@ -41,7 +41,7 @@ jobs:
       - run:
            name: Load into Docker in remote and recompose app 
            command: |
-             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz && docker-compose up'
+             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz && cd /app & docker-compose up'
 
 
 
