@@ -1,0 +1,9 @@
+
+services:
+  web:
+    image: express
+    ports:
+      - "3000:3000"
+    volumes:
+      - ~/app/src/config.js:/var/www/express/config.js
+      - ~/app/src/build:/var/www/express/build
