@@ -36,7 +36,7 @@ jobs:
       - run:
            name: Move Docker Compose file to remote, should be a better way to deploy compose files
            command: |
-             scp /project/docker-compose.yml $SSH_USER@$SSH_HOST:/app 
+             scp ~/project/docker-compose.yml $SSH_USER@$SSH_HOST:/app 
 
       - run:
            name: Load into Docker in remote
