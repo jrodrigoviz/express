@@ -39,9 +39,9 @@ jobs:
              scp ~/project/docker-compose.yml $SSH_USER@$SSH_HOST:/app 
 
       - run:
-           name: Load into Docker in remote
+           name: Load into Docker in remote and recompose app
            command: |
-             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz'
+             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz && cd /app && docker compose up'
 
 
 

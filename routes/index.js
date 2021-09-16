@@ -3,14 +3,8 @@ var router = express.Router();
 var mongoClient = require('mongodb').MongoClient;
 var db = require('mongodb').db;
 var config = require('../config');
-var schedule = require('../jobs/nytFetch');
 
 const db_url ='mongodb://'+config.mongoRead.user+":"+config.mongoRead.password+"@"+config.mongoRead.host+"/"+config.mongoRead.database;
-
-/* start the option of running the api fetch job */
-
-if(process.env.NODE_ENV=='production'){ schedule();};
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

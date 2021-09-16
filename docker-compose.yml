@@ -13,3 +13,7 @@ services:
       - /app/src/build:/var/www/express/build
       # mount the images folder
       - /app/public:/var/www/express/public
+  worker:
+    image: matchstick-worker
+    volumes:
+      - /app/src/config.js:/app/config.js
