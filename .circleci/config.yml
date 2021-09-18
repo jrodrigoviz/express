@@ -31,17 +31,17 @@ jobs:
       - run:
            name: Deploy Over SCP
            command: |
-             scp /express_prod.tar.gz $SSH_USER@$SSH_HOST:/app/src 
+             scp /express_prod.tar.gz $SSH_USER@$SSH_HOST:~/app/src 
 
       - run:
            name: Move Docker Compose file to remote, should be a better way to deploy compose files
            command: |
-             scp ~/project/docker-compose.yml $SSH_USER@$SSH_HOST:/app 
+             scp ~/project/docker-compose.yml $SSH_USER@$SSH_HOST:~/app 
 
       - run:
            name: Load into Docker in remote and recompose app 
            command: |
-             ssh $SSH_USER@$SSH_HOST  'docker load < /app/src/express_prod.tar.gz && cd /app && docker-compose up -d'
+             ssh $SSH_USER@$SSH_HOST  'docker load < ~/app/src/express_prod.tar.gz && cd ~/app && docker-compose up -d'
 
 
 
