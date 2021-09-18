@@ -9,11 +9,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /app/src/config.js:/var/www/express/config.js
-      - /app/src/build:/var/www/express/build
+      - ~/app/src/config.js:/var/www/express/config.js
+      - ~/app/src/build:/var/www/express/build
       # mount the images folder
-      - /app/public:/var/www/express/public
+      - ~/app/public:/var/www/express/public
   worker:
     image: matchstick-worker
     volumes:
-      - /app/src/config.js:/app/config.js
+      - ~/app/src/config.js:/app/config.js
